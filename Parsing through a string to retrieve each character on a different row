@@ -1,6 +1,10 @@
 Exercise #1: Parsing through a string to retrieve each character on a different row.
 
-	Solution #1, Query #1: We will retrieve each character for FullName values and place each character on a different row, using a Cartesian Product.
+
+Solution #1, Query #1: We will retrieve each character for FullName values and place each character on a different row, using a Cartesian Product.
+	+ Cartesian Product, Iteration managed by WHERE clause
+	+ Functions: SUBSTRING, REPLACE, LEN
+	+ Window functions: ROW_NUMBER()
 
 SELECT Person.BusinessEntityID
 , Person.FirstNameNoSpaces
@@ -15,7 +19,6 @@ FROM
 	) AS Iteration	
 WHERE Iteration.Position <= LEN(REPLACE(Person.FirstNameNoSpaces, ' ',''))
 ORDER BY LEN(Person.FirstNameNoSpaces) DESC
-
 
 	-- OUTPUT
 BusinessEntityID	FirstNameNoSpaces		FirstNameCharacter
@@ -86,9 +89,12 @@ For example, after removing whitespaces, the value FirstName = 'Janaina Barreiro
 
 
 
-	Query #1.1: Explanation of how the iteration goes through a string for FirstName = 'Janaina Barreiro Gambaro'
+
+Query #1.1: Explanation of how the iteration goes through a string for FirstName = 'Janaina Barreiro Gambaro'
+	+ Cartesian Product, Iteration managed by WHERE clause	
+	+ Functions: SUBSTRING, REPLACE, LEN
 		+ REPLACE(FirstName, ' ','') = 'JanainaBarreiroGambaro'
-		+ WHERE clause manages the iteration
+	+ Window functions: ROW_NUMBER()		
 
 SELECT Person.FirstNameNoSpaces
 , Iteration.Position AS IterationPosition
@@ -129,10 +135,12 @@ JanainaBarreiroGambaro		22			o
 
 
 
-	Query #1.2: Explanation of the role of the WHERE clause during the iteration
-		+ FirstName = 'Janaina Barreiro Gambaro'
-		+ REPLACE(FirstName, ' ','') = 'JanainaBarreiroGambaro'
-		- Removing the WHERE clause, which manages the iteration
+
+Query #1.2: Explanation of the role of the WHERE clause during the iteration
+	+ Cartesian Product
+	+ FirstName = 'Janaina Barreiro Gambaro'
+	+ REPLACE(FirstName, ' ','') = 'JanainaBarreiroGambaro'
+	- Removing the WHERE clause, which manages the iteration
 
 SELECT Person.FirstNameNoSpaces
 , Iteration.Position AS IterationPosition
