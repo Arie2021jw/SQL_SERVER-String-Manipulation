@@ -1,12 +1,21 @@
 Exercise #5: Convert delimited lists separated by commas into a list of multiple values that can be passed to the IN clause and used in the WHERE clause.
 
+
 Solution #1: We use a similar logic applied on previous Exercise #4 to column "DelimitedListCityName", to create a column with delimited lists of City names separated by commas and grouped by country (using column "CountryRegionCode").
 
+Tables used:
+1) [AdventureWorks2022].[Person].[Address]
+2) [AdventureWorks2022].[Person].[StateProvince]
+3) [AdventureWorks2022].[Sales].[SalesTerritory]
 
-	Query #1: Retrieving values from column PersonAddress.City (horizontally) in a delimited list by commas, instead of vertically, using subqueries
-		+ 6 Subqueries
-		+ 2 Iterations
-		+ Functions: STRING_AGG, SUBSTRING
+
+Query #1: Retrieving values from column PersonAddress.City (horizontally) in a delimited list by commas, instead of vertically, using subqueries
+	+ 6 Subqueries
+	+ Cartesian Product
+	+ 2 Iterations
+	+ Functions: SUBSTRING, CHARINDEX, LEN, STRING_AGG, CONVERT, NVARCHAR(max), CHAR
+	+ Window functions: ROW_NUMBER() OVER(ORDER BY )
+
 
 SELECT AddressLine1
 FROM [AdventureWorks2022].[Person].[Address] 
@@ -75,8 +84,8 @@ Zeeland		855 East Main Avenue
 
 
 
-	Explanation for this solution:
-	------------------------------
+	Explanation for solution #1:
+	---------------------------
 We use multiple subqueries:
 1) Subquery "X": uses tables from database [AdventureWorks2022]. 
 For guidance we call it "OriginalTables1". This subquery is at Level 1.
@@ -95,6 +104,7 @@ This subquery is at Level 3.
 Uses Window Function ROW_NUMBER() which returns a list of sequential numbers, starting at 1 for the first row in each partition, ending at 19,614.
 19,614 is the number of rows in table [AdventureWorks2022].[Person].[Address].
 This subquery is at Level 3.
+
 
 5) Subquery SubstringOne: the function SUBSTRING (#1) extracts the delimited lists created by Subquery Z, and returns a total of 117,684 rows = 6 multiplied by 19,614.
 117,684 rows = total number of delimited lists of City names separated by commas for each of the 6 CountryRegionCode.
@@ -122,10 +132,10 @@ After adding the WHERE clause (WHERE Iteration.Position <= LEN(Z.DelimListCityNa
 	------------------------------
 	Total			5,657
 
+
 5.3) Function SUBSTRING and the iteration:
 For each of the 5,657 rows, this function returns a string having 1 character less than the previous row each time that the iteration passes through each row.
 For example, below we can see the values returned by this function for FirstName values for CountryRegionCode equals to AU and CA.
-
 
 Row #	SUBSTDelimCityName								CharacterLengthDelimitedLists	CountryRegionCode
 1	,Bendigo,Cloverdale,Port Macquarie,South Melbourne,.........,Wollongong,	421				AU
@@ -217,7 +227,7 @@ Row #	SUBSTDelimCityName			osition2ndComma		LengthParam3	lenSUBSTDelimCityName	C
 (end of results)
 
 
-5.1) WHERE clause: 
+6.1) WHERE clause: 
 It is as follows: WHERE LEN(SUBSTDelimCityName) > 1 AND SUBSTRING(SUBSTDelimCityName, 1, 1) = ','
 It keeps the rows from column "SUBSTDelimCityName" that (1) has more than 1 character and (2) the first character of the string is a comma.
 In the above example, it keeps row 1, filters out rows from 2 up to 8, keeps row 9, filters out rows from 10 up to 19, etc.
