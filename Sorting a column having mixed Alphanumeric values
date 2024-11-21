@@ -1,11 +1,18 @@
 Exercise #1: Sorting a column having mixed Alphanumeric values, by (1) numeric portion or (2) character portion.
 
+
 Solution #1: We create a table that contains a mixed alphanumeric column ("AlphaNumericText") using fullnames and phone numbers, as well as 2 columns ("SortNumPortion", "SortCharPortion") for sorting by the (1) numeric portion or (2) character portion.
+
+Tables used:
+1) [AdventureWorks2022].[Person].[Person]
+2) [AdventureWorks2022].[Person].[PersonPhone]
+
 
 	Query #1: Table with column AlphaNumericText and columns for sorting by numeric or character
     		+ Functions: REPLACE, PATINDEX, SUBSTRING, CONCATENATION, COALESCE, LEN
     		+ Subquery: CASE statement, INNER JOIN
 	    	+ NULL values
+
 SELECT X.FirstName
 , X.MiddleName
 , X.LastName
@@ -30,7 +37,7 @@ FROM (
 	FROM [AdventureWorks2022].[Person].[Person] AS E
 	INNER JOIN [AdventureWorks2022].[Person].[PersonPhone] AS PN
 		ON E.BusinessEntityID = PN.BusinessEntityID
-	) AS X
+    ) AS X
 
 	-- OUTPUT
 FirstName   MiddleName	LastName	FullName		PhoneNumber	AlphaNumericText	                NumStartPosition	SortFirst3Numbers	SortSecond3Numbers	SortLast4Numbers	SortCharPortion
@@ -137,6 +144,7 @@ Zoe W Watson 166-555-0180
 
 
 
+
 Solution #2: As an alternative to solution #1, we create a VIEW with only 1 column (called "AlphaNumericText") for values of fullnames and phone numbers.
 	Query #2: Create a VIEW with only 1 column, "AlphaNumericText"
 
@@ -190,6 +198,7 @@ ORDER BY SUBSTRING(AlphaNumericText, 1, LEN(AlphaNumericText))
 
 	-- OUTPUT
 We get the same results as in Query #1.2.
+
 
 
 
@@ -314,6 +323,7 @@ ORDER BY RTRIM(REPLACE(REPLACE(TRANSLATE(X.AlphaNumericText, '0123456789', '0000
 
 	-- OUTPUT
 We get the same results as in Query #1.2 and Query #2.2.
+
 
 
 
