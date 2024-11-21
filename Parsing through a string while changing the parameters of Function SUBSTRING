@@ -1,7 +1,16 @@
-Exercise #2: Parsing through a string while changing the parameters of Function SUBSTRING
+Exercise #1: Parsing through a string while changing the parameters of Function SUBSTRING
 
-	Solution #1, Query #1: Retrieving ascending and descending number of characters for FullName values on different rows, using a Cartesian Product.
 
+Solution #1: We retrieve a single characteror a string from the column FullName and place them on a separate row using a Cartesian Product.
+
+Table used: [AdventureWorks2022].[Person].[Person]
+
+
+Query #1: Retrieving ascending and descending number of characters for FullName values on different rows, using a Cartesian Product.
+	+ Cartesian Product, Iteration managed by WHERE clause
+	+ 2 Subqueries, tables 
+	+ Functions: SUBSTRING, LEN
+	+ Window functions: ROW_NUMBER() OVER(ORDER BY )
 
 SELECT DISTINCT Person.FirstNameNoSpaces
 , Iteration.Position AS IterationPosition
