@@ -1,7 +1,12 @@
 Exercise #1: Parsing through a string to retrieve each character on a different row.
 
 
-Solution #1, Query #1: We will retrieve each character for FullName values and place each character on a different row, using a Cartesian Product.
+Solution #1: We retrieve 1 character from column FullName and place each character on a different row, using a Cartesian Product.
+
+Table used:
+1) [AdventureWorks2022].[Person].[Person]
+
+Query #1: We retrieve each character for FullName values and place each character on a different row, using a Cartesian Product.
 	+ Cartesian Product, Iteration managed by WHERE clause
 	+ Functions: SUBSTRING, REPLACE, LEN
 	+ Window functions: ROW_NUMBER()
