@@ -5,7 +5,6 @@ Solution #1: We retrieve a single characteror a string from the column FullName 
 
 Table used: [AdventureWorks2022].[Person].[Person]
 
-
 Query #1: Retrieving ascending and descending number of characters for FullName values on different rows, using a Cartesian Product.
 	+ Cartesian Product, Iteration managed by WHERE clause
 	+ 2 Subqueries, tables 
