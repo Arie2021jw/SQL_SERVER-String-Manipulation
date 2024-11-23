@@ -336,13 +336,13 @@ Solution #2: As an alternative for solution #1, below we show how we can solve t
 WITH 
 UniqueFirstName AS 
 ( 
-	SELECT DISTINCT REPLACE(UPPER(FirstName), ' ','') AS DistinctFirstNameNoSpaces			-- UniqueFirstNameNoSpaces1
-	FROM [AdventureWorks2022].[Person].[Person] AS UniqueFirstNameNoSpaces				-- UniqueFirstNameNoSpaces1
+	SELECT DISTINCT REPLACE(REPLACE(UPPER(FirstName), ' ',''),'-','') AS DistinctFirstNameNoSpaces		-- UniqueFirstNameNoSpaces1
+	FROM [AdventureWorks2022].[Person].[Person] AS UniqueFirstNameNoSpaces					-- UniqueFirstNameNoSpaces1
 ),
 Iteration AS 
 ( 
-	SELECT ROW_NUMBER() OVER(ORDER BY LEN(REPLACE(UPPER(FirstName), ' ',''))) AS Position		-- Iteration1
-	FROM [AdventureWorks2022].[Person].[Person]							-- Iteration1
+	SELECT ROW_NUMBER() OVER(ORDER BY LEN(REPLACE(REPLACE(UPPER(FirstName), ' ',''),'-',''))) AS Position		-- Iteration1
+	FROM [AdventureWorks2022].[Person].[Person]									-- Iteration1
 ),
 IteratedUniqueFirstName AS 
 ( 
