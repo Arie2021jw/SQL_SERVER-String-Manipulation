@@ -10,12 +10,12 @@ Tables used:
 
 
 Query #1: Retrieving values from column PersonAddress.City (horizontally) in a delimited list by commas, instead of vertically, using subqueries
-	+ 6 Subqueries
-	+ Cartesian Product
-	+ 2 Iterations
-	+ Functions: SUBSTRING, CHARINDEX, LEN, STRING_AGG, CONVERT, NVARCHAR(max), CHAR
-	+ Window functions: ROW_NUMBER() OVER(ORDER BY )
-
+		+ 7 Subqueries
+		+ 2 Cartesian Products
+		+ 2 Iterations
+		+ Window Function: ROW_NUMBER() OVER(ORDER BY )
+		+ Functions: SUBSTRING, CHARINDEX, LEN, STRING_AGG, CONVERT, NVARCHAR(max), CHAR
+		+ SELECT DISTINCT
 
 SELECT AddressLine1
 FROM [AdventureWorks2022].[Person].[Address] 
@@ -527,7 +527,14 @@ Carson
 
 Solution #2: As an alternative for solution #1, below we show how we can solve this exercise using Common Table Expression (CTEs).
 
-	Query #2:
+	Query #2: Solving this exercise usisng Common Table Expression (CTEs)
+		+ 7 Subqueries
+		+ 2 Cartesian Products
+		+ 2 Iterations
+		+ Window Function: ROW_NUMBER() OVER(ORDER BY )
+		+ Functions: SUBSTRING, CHARINDEX, LEN, STRING_AGG, CONVERT, NVARCHAR(max), CHAR
+		+ SELECT DISTINCT
+
 WITH
 Subquery_X AS
 ( 
@@ -602,5 +609,80 @@ New York	2596 Big Canyon Road
 .......................................... TRUNCATED RESULTS .........
 York		2050 B Avenue I
 Zeeland		855 East Main Avenue
+(19614 rows affected)
+(end of results)
+
+
+
+
+
+
+Solution #2.1: We can also store the list of cities from SubstringTwo5 into variable "CitiesforINclause", that is called on last SELECT statement.
+
+	Query #2.1: Solving this exercise usisng Common Table Expression (CTEs)
+		+ 7 Subqueries
+		+ 2 Cartesian Products
+		+ 2 Iterations
+		+ Window Function: ROW_NUMBER() OVER(ORDER BY )
+		+ Functions: SUBSTRING, CHARINDEX, LEN, STRING_AGG, CONVERT, NVARCHAR(max), CHAR
+		+ SELECT DISTINCT
+		+ 1 variable ("CitiesforINclause") that stores the values for IN clause
+
+WITH
+Subquery_X AS
+( 
+	SELECT PersonAddress.AddressID					-- OriginalTables1 = X
+	, PersonAddress.City
+	, PersonAddress.StateProvinceID
+	, StateID.StateProvinceCode
+	, StateID.CountryRegionCode
+	, StateID.TerritoryID
+	, SalesTerritory.Name AS TerritoryName
+	FROM [AdventureWorks2022].[Person].[Address] AS PersonAddress
+	LEFT JOIN [AdventureWorks2022].[Person].[StateProvince] AS StateID
+	ON PersonAddress.StateProvinceID = StateID.StateProvinceID
+	LEFT JOIN [AdventureWorks2022].[Sales].[SalesTerritory] AS SalesTerritory
+	ON StateID.TerritoryID = SalesTerritory.TerritoryID							-- OriginalTables1 = X
+), 
+Subquery_Y AS
+(
+	SELECT DISTINCT Subquery_X.City					-- UniqueCityName2 = Y
+		, Subquery_X.CountryRegionCode
+	FROM Subquery_X									-- UniqueCityName2 = Y
+), 
+Subquery_Z AS
+(
+	SELECT ',' + STRING_AGG (CONVERT(NVARCHAR(max),Subquery_Y.City), CHAR(44)) + ',' AS DelimListCityName		-- DelimListCities3 = Z
+	FROM Subquery_Y
+	GROUP BY Subquery_Y.CountryRegionCode					-- DelimitedListCities3 = Z 
+), 
+Iteration AS 
+(
+	SELECT ROW_NUMBER() OVER(ORDER BY AddressID) AS Position			-- Iteration3
+	FROM [AdventureWorks2022].[Person].[Address]						-- Iteration3
+), 
+SubstringOne4 AS 
+(
+	SELECT SUBSTRING(Subquery_Z.DelimListCityName, Iteration.Position, LEN(Subquery_Z.DelimListCityName)) AS SUBSTDelimCityName	-- SubstringOne4
+	FROM Subquery_Z, Iteration
+	WHERE Iteration.Position <= LEN(Subquery_Z.DelimListCityName)					-- SubstringOne4
+),
+SubstringTwo5 AS 
+( 
+	SELECT CitiesforINclause = SUBSTRING(SubstringOne4.SUBSTDelimCityName, 2, CHARINDEX(',', SubstringOne4.SUBSTDelimCityName, 2) - 2) -- AS CityName		-- SubstringTwo5
+	FROM SubstringOne4
+	WHERE LEN(SUBSTDelimCityName) > 1 AND SUBSTRING(SUBSTDelimCityName, 1, 1) = ','					-- SubstringTwo5
+) 
+SELECT AddressLine1
+FROM [AdventureWorks2022].[Person].[Address] 
+WHERE City IN	(
+		SELECT CitiesforINclause
+		FROM SubstringTwo5
+		)
+ORDER BY City
+
+
+	-- OUTPUT
+We get the same results as in Query #2.
 (19614 rows affected)
 (end of results)
