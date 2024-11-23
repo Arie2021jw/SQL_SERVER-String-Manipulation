@@ -278,41 +278,38 @@ FROM (
 	WHERE Iteration.Position <= LEN(REPLACE(UniqueFirstName.DistinctFirstNameNoSpaces, ' ',''))		-- UniqueFirstName2.1
 	) AS X
 GROUP BY X.FirstNames												-- NewNames3
-
+ORDER BY X.FirstNames
 
 	-- OUTPUT
 OriginalFirstName	NewFirstName
-ABRAHAM			AAABHMR
-ADINA			AADIN
-ADRIENNE		ADEEINNR
-AIDAN			AADIN
-AIMEE			AEEIM
+A.			.A
+A.SCOTT			.ACOSTT
+AARON			AANOR
+ABBY			ABBY
 ABE			ABE
+ABHIJIT			ABHIIJT
 .............................................. TRUNCATED RESULTS ................
-FRANÇOIS		AÇFINORS
-CAROLEE			ACEELOR
-CASSIE			ACEISS
-CATHY			ACHTY
-CECIL			CCEIL
-CHARLES			ACEHLRS
+DEENA			ADEEN
+DEEPAK			ADEEKP
+DELIA			ADEIL
+DELLA			ADELL
+DENEAN			ADEENN
 .............................................. TRUNCATED RESULTS ................
-MARISSA			AAIMRSS
-MARJORIE		AEIJMORR
-MARTY			AMRTY
-MARVIN			AIMNRV
-MATTHIAS		AAHIMSTT
+JOSSEF			EFJOSS
+JOSUE			EJOSU
+JOVITA			AIJOTV
+JOY			JOY
+JOYCE			CEJOY
 .............................................. TRUNCATED RESULTS ................
-RUDOLPH			DHLOPRU
-TERRY			ERRTY
-TOM			MOT
-TONI			INOT
-TSVI			ISTV
-TWANNA			AANNTW
-VERONICA		ACEINORV
+ORLANDO			ADLNOOR
+OSARUMWENSE		AEEMNORSSUW
+OSCAR			ACORS
+OVIDIU			DIIOUV
 .............................................. TRUNCATED RESULTS ................
-WILSON			ILNOSW
-WYATT			ATTWY
-Y.			.Y
+YVONNE			ENNOVY
+ZACHARY			AACHRYZ
+ZAINAL			AAILNZ
+ZHENG			EGHNZ
 ZOE			EOZ
 (1018 rows affected)
 (end of results)
