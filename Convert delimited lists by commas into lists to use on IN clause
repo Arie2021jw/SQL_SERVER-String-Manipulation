@@ -575,9 +575,11 @@ SubstringTwo5 AS
 ) 
 SELECT AddressLine1
 FROM [AdventureWorks2022].[Person].[Address] 
-WHERE City IN (SELECT SUBSTRING(SubstringOne4.SUBSTDelimCityName, 2, CHARINDEX(',', SubstringOne4.SUBSTDelimCityName, 2) - 2) AS CityName		-- SubstringTwo5
-FROM SubstringOne4
-WHERE LEN(SUBSTDelimCityName) > 1 AND SUBSTRING(SUBSTDelimCityName, 1, 1) = ',')							-- SubstringTwo5		
+WHERE City IN	(
+		SELECT SUBSTRING(SubstringOne4.SUBSTDelimCityName, 2, CHARINDEX(',', SubstringOne4.SUBSTDelimCityName, 2) - 2) AS CityName	-- SubstringTwo5
+		FROM SubstringOne4
+		WHERE LEN(SUBSTDelimCityName) > 1 AND SUBSTRING(SUBSTDelimCityName, 1, 1) = ','
+		)																-- SubstringTwo5
 ORDER BY City
 
 
