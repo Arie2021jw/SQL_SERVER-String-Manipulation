@@ -1,7 +1,7 @@
 Exercise #1: Create delimited lists from table rows
 
 
-Solution #1: We create delimited list separated by commas from column City using function STRING_AGG and Subqueries.
+Solution #1: We create delimited list separated by commas from column City using function STRING_AGG and 2 subqueries.
 
 Tables used:
 1) [AdventureWorks2022].[Person].[Address]
