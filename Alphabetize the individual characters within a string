@@ -27,7 +27,7 @@ FROM (
 		SELECT ROW_NUMBER() OVER(ORDER BY LEN(REPLACE(UPPER(FirstName), ' ',''))) AS Position		-- Iteration1
 		FROM [AdventureWorks2022].[Person].[Person]							-- Iteration1
 		) AS Iteration												-- UniqueFirstName2
-	WHERE Iteration.Position <= LEN(REPLACE(UniqueFirstName.DistinctFirstNameNoSpaces, ' ',''))		-- UniqueFirstName2.1
+	WHERE Iteration.Position <= LEN(REPLACE(UniqueFirstName.DistinctFirstNameNoSpaces, ' ',''))
 	) AS X
 GROUP BY X.FirstNames										-- NewNames3
 
@@ -219,7 +219,7 @@ SELECT UniqueFirstName.DistinctFirstNameNoSpaces AS FirstNames							-- UniqueFi
 FROM (
 		SELECT DISTINCT REPLACE(UPPER(FirstName), ' ','') AS DistinctFirstNameNoSpaces			-- UniqueFirstNameNoSpaces1
 		FROM [AdventureWorks2022].[Person].[Person] AS UniqueFirstNameNoSpaces			-- UniqueFirstNameNoSpaces1
-	) AS UniqueFirstName,										-- UniqueFirstName2
+	) AS UniqueFirstName,	
 	(
 		SELECT ROW_NUMBER() OVER(ORDER BY LEN(REPLACE(UPPER(FirstName), ' ',''))) AS Position	-- Iteration1
 		FROM [AdventureWorks2022].[Person].[Person]						-- Iteration1
@@ -263,22 +263,22 @@ ZOE			E
 	Query #1.3:
 	-----------
 
-SELECT X.FirstNames AS OriginalFirstName							-- NewNames3
+SELECT X.FirstNames AS OriginalFirstName									-- NewNames3
 , STRING_AGG (X.CharactersFirstNameNoSpaces, '') WITHIN GROUP (ORDER BY X.CharactersFirstNameNoSpaces) AS NewFirstName
 FROM (
-	SELECT UniqueFirstName.DistinctFirstNameNoSpaces AS FirstNames							-- UniqueFirstName2
+	SELECT UniqueFirstName.DistinctFirstNameNoSpaces AS FirstNames						-- UniqueFirstName2.1
 	, SUBSTRING(UniqueFirstName.DistinctFirstNameNoSpaces, Iteration.Position, 1) AS CharactersFirstNameNoSpaces
 	FROM (
 			SELECT DISTINCT REPLACE(UPPER(FirstName), ' ','') AS DistinctFirstNameNoSpaces		-- UniqueFirstNameNoSpaces1
 			FROM [AdventureWorks2022].[Person].[Person] AS UniqueFirstNameNoSpaces			-- UniqueFirstNameNoSpaces1
-		) AS UniqueFirstName,										-- UniqueFirstName2
+		) AS UniqueFirstName,
 		(
 			SELECT ROW_NUMBER() OVER(ORDER BY LEN(REPLACE(UPPER(FirstName), ' ',''))) AS Position		-- Iteration1
 			FROM [AdventureWorks2022].[Person].[Person]							-- Iteration1
-		) AS Iteration												-- UniqueFirstName2
+		) AS Iteration	
 	WHERE Iteration.Position <= LEN(REPLACE(UniqueFirstName.DistinctFirstNameNoSpaces, ' ',''))		-- UniqueFirstName2.1
 	) AS X
-GROUP BY X.FirstNames										-- NewNames3
+GROUP BY X.FirstNames												-- NewNames3
 
 
 	-- OUTPUT
