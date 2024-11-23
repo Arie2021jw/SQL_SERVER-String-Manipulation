@@ -1,8 +1,9 @@
 Exercise #1: Convert delimited lists separated by commas into a list of multiple values that can be passed to the IN clause and used in the WHERE clause.
 
 
-Solution #1: We use a similar logic applied on previous Exercise #4 to column "DelimitedListCityName", to create a column with delimited lists of City names separated by commas and grouped by country (using column "CountryRegionCode").
+Solution #1: We use a similar logic applied on Exercise "SQL_SERVER-String-Manipulation/Create delimited lists by commas from table rows" to column "DelimitedListCityName", to create a column with delimited lists of City names separated by commas and grouped by country (using column "CountryRegionCode").
 
+Path to exercise "Create delimited lists by commas from table rows": https://github.com/Arie2021jw/SQL_SERVER-String-Manipulation/blob/main/Create%20delimited%20lists%20by%20commas%20from%20table%20rows
 
 Tables used:
 1) [AdventureWorks2022].[Person].[Address]
