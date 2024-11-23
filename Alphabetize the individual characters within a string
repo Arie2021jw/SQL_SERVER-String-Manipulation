@@ -313,3 +313,47 @@ ZHENG			EGHNZ
 ZOE			EOZ
 (1018 rows affected)
 (end of results)
+
+
+
+
+
+
+Solution #2: As an alternative for solution #1, below we show how we can solve this exercise using Common Table Expression (CTEs).
+
+	Query #2: Solving this exercise usisng Common Table Expression (CTEs)
+		+ 4 Subqueries
+		+ 1 Cartesian Product
+		+ 1 Iteration
+		+ Window Function: ROW_NUMBER() OVER(ORDER BY)
+		+ Functions: STRING_AGG, SUBSTRING, LEN, REPLACE
+		+ SELECT DISTINCT 
+
+WITH 
+UniqueFirstName AS 
+( 
+	SELECT DISTINCT REPLACE(UPPER(FirstName), ' ','') AS DistinctFirstNameNoSpaces			-- UniqueFirstNameNoSpaces1
+	FROM [AdventureWorks2022].[Person].[Person] AS UniqueFirstNameNoSpaces				-- UniqueFirstNameNoSpaces1
+),
+Iteration AS 
+( 
+	SELECT ROW_NUMBER() OVER(ORDER BY LEN(REPLACE(UPPER(FirstName), ' ',''))) AS Position		-- Iteration1
+	FROM [AdventureWorks2022].[Person].[Person]							-- Iteration1
+),
+IteratedUniqueFirstName AS 
+( 
+	SELECT UniqueFirstName.DistinctFirstNameNoSpaces AS FirstNames							-- UniqueFirstName2.1
+	, SUBSTRING(UniqueFirstName.DistinctFirstNameNoSpaces, Iteration.Position, 1) AS CharactersFirstNameNoSpaces
+	FROM UniqueFirstName, Iteration
+	WHERE Iteration.Position <= LEN(REPLACE(UniqueFirstName.DistinctFirstNameNoSpaces, ' ',''))			-- UniqueFirstName2.1
+)
+SELECT FirstNames
+, STRING_AGG (CharactersFirstNameNoSpaces, '') WITHIN GROUP (ORDER BY CharactersFirstNameNoSpaces) AS NewFirstName
+--, CharactersFirstNameNoSpaces
+FROM IteratedUniqueFirstName
+GROUP BY FirstNames 
+ORDER BY FirstNames
+
+
+	-- OUTPUT
+We get the same results as in Query #1.3.
