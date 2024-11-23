@@ -1,4 +1,4 @@
-Exercise #5: Convert delimited lists separated by commas into a list of multiple values that can be passed to the IN clause and used in the WHERE clause.
+Exercise #1: Convert delimited lists separated by commas into a list of multiple values that can be passed to the IN clause and used in the WHERE clause.
 
 
 Solution #1: We use a similar logic applied on previous Exercise #4 to column "DelimitedListCityName", to create a column with delimited lists of City names separated by commas and grouped by country (using column "CountryRegionCode").
