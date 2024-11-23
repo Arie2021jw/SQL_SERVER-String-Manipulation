@@ -162,7 +162,7 @@ ZOE
 
 
 
-	Query #1.2: We retrieve the characters for each value in column FirstName
+	Query #1.2: We retrieve the characters for each value in column FirstName using a Cartesian Product
 	-----------
 
 SELECT UniqueFirstName.FirstNameNoSpaces AS UniqueFirstName			-- UniqueFirstName2
@@ -212,7 +212,7 @@ Row #		UniqueFirstName		FirstCharacterUniqueFirstName
 
 
 
-	Query #1.2.1:
+	Query #1.2.1: We retrieve the characters for each value in column FirstName using a Cartesian Product and limit the results with a WHERE clause
 	-------------
 SELECT UniqueFirstName.DistinctFirstNameNoSpaces AS FirstNames							-- UniqueFirstName2.1
 , SUBSTRING(UniqueFirstName.DistinctFirstNameNoSpaces, Iteration.Position, 1) AS CharactersFirstNameNoSpaces
@@ -259,8 +259,7 @@ ZOE			E
 
 
 
-
-	Query #1.3:
+	Query #1.3: We retrieve the concatenated characters of the FirstName in alphabetical order using function STRING_AGG
 	-----------
 
 SELECT X.FirstNames AS OriginalFirstName									-- NewNames3
