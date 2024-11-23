@@ -203,24 +203,24 @@ Parameter #3 (length): number of characters to extract = CHARINDEX(',', Substrin
 
 Row #	SUBSTDelimCityName			osition2ndComma		LengthParam3	lenSUBSTDelimCityName	CityName
 1	,Bendigo,Cloverdale,Port .....		9			7		421			Bendigo
-2	Bendigo,Cloverdale,Port M.....		8			6		420			endigo	<--- Filtered out/WHERE
-3	endigo,Cloverdale,Port Ma.....		7			5		419			ndigo	<--- Filtered out/WHERE
-4	ndigo,Cloverdale,Port Mac.....		6			4		418			digo	<--- Filtered out/WHERE
-5	digo,Cloverdale,Port Macq.....		5			3		417			igo	<--- Filtered out/WHERE
-6	igo,Cloverdale,Port Macqu.....		4			2		416			go	<--- Filtered out/WHERE
-7	go,Cloverdale,Port Macqua.....		3			1		415			o	<--- Filtered out/WHERE
-8	o,Cloverdale,Port Macquar.....		2			0		414				<--- Filtered out/WHERE
+2	Bendigo,Cloverdale,Port M.....		8			6		420			endigo		<--- This row will be filtered out by WHERE clause, see 6.1) below
+3	endigo,Cloverdale,Port Ma.....		7			5		419			ndigo		<--- This row will be filtered out by WHERE clause, see 6.1) below
+4	ndigo,Cloverdale,Port Mac.....		6			4		418			digo		<--- This row will be filtered out by WHERE clause, see 6.1) below
+5	digo,Cloverdale,Port Macq.....		5			3		417			igo		<--- This row will be filtered out by WHERE clause, see 6.1) below
+6	igo,Cloverdale,Port Macqu.....		4			2		416			go		<--- This row will be filtered out by WHERE clause, see 6.1) below
+7	go,Cloverdale,Port Macqua.....		3			1		415			o		<--- This row will be filtered out by WHERE clause, see 6.1) below
+8	o,Cloverdale,Port Macquar.....		2			0		414					<--- This row will be filtered out by WHERE clause, see 6.1) below
 9	,Cloverdale,Port Macquari.....		12			10		413			Cloverdale
-10	Cloverdale,Port Macquarie.....		11			9		412			loverdale <- Filtered out/WHERE
-11	loverdale,Port Macquarie,.....		10			8		411			overdale  <- Filtered out/WHERE
-12	overdale,Port Macquarie,S.....		9			7		410			verdale	  <- Filtered out/WHERE
-13	verdale,Port Macquarie,So.....		8			6		409			erdale	  <- Filtered out/WHERE
-14	erdale,Port Macquarie,Sou.....		7			5		408			rdale	  <- Filtered out/WHERE
-15	rdale,Port Macquarie,Sout.....		6			4		407			dale	  <- Filtered out/WHERE
-16	dale,Port Macquarie,South.....		5			3		406			ale	  <- Filtered out/WHERE
-17	ale,Port Macquarie,South .....		4			2		405			le	  <- Filtered out/WHERE
-18	le,Port Macquarie,South M.....		3			1		404			e	  <- Filtered out/WHERE
-19	e,Port Macquarie,South Me.....		2			0		403				  <- Filtered out/WHERE
+10	Cloverdale,Port Macquarie.....		11			9		412			loverdale 	<--- This row will be filtered out by WHERE clause, see 6.1) below
+11	loverdale,Port Macquarie,.....		10			8		411			overdale  	<--- This row will be filtered out by WHERE clause, see 6.1) below
+12	overdale,Port Macquarie,S.....		9			7		410			verdale	  	<--- This row will be filtered out by WHERE clause, see 6.1) below
+13	verdale,Port Macquarie,So.....		8			6		409			erdale	  	<--- This row will be filtered out by WHERE clause, see 6.1) below
+14	erdale,Port Macquarie,Sou.....		7			5		408			rdale	 	<--- This row will be filtered out by WHERE clause, see 6.1) below
+15	rdale,Port Macquarie,Sout.....		6			4		407			dale	  	<--- This row will be filtered out by WHERE clause, see 6.1) below
+16	dale,Port Macquarie,South.....		5			3		406			ale	  	<--- This row will be filtered out by WHERE clause, see 6.1) below
+17	ale,Port Macquarie,South .....		4			2		405			le	  	<--- This row will be filtered out by WHERE clause, see 6.1) below
+18	le,Port Macquarie,South M.....		3			1		404			e	  	<--- This row will be filtered out by WHERE clause, see 6.1) below
+19	e,Port Macquarie,South Me.....		2			0		403				  	<--- This row will be filtered out by WHERE clause, see 6.1) below
 20	,Port Macquarie,South Mel.....		16			14		402			Port Macquarie
 ....................................................... TRUNCATED RESULTS ...............................................................
 (5657 rows affected)
@@ -249,7 +249,6 @@ Sydney
 
 
 Below are the queries used step-by-step for this solution.
-
 
 	Query #1.1: Creates subquery "X" from tables [AdventureWorks2022].[Person].[Address], [AdventureWorks2022].[Person].[StateProvince] and [AdventureWorks2022].[Sales].[SalesTerritory]
 	----------
