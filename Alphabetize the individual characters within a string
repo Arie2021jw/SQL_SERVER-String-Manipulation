@@ -325,7 +325,7 @@ ZOE			EOZ
 
 Solution #2: As an alternative for solution #1, below we show how we can solve this exercise using Common Table Expression (CTEs).
 
-	Query #2: Solving this exercise usisng Common Table Expression (CTEs)
+	Query #2: Solving this exercise using Common Table Expression (CTEs)
 		+ 4 Subqueries
 		+ 1 Cartesian Product
 		+ 1 Iteration
