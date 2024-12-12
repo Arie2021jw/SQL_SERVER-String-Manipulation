@@ -6,6 +6,6 @@ List of examples:
 2) Convert delimited lists by commas into lists to use on IN clause
 3) Create delimited lists by commas from table rows
 4) Parsing through a string to retrieve each character on a different row
-5) Parsing through a string while changing the parameters of Function SUBSTRING
-6) Sorting a column having mixed Alphanumeric values
-7) Sorting a column having strings having only letters 
+5) Parsing through a string while changing the parameters of SUBSTRING function
+6) Sorting a column having mixed AlphaNumeric values
+7) Sorting a column having strings having only letters
